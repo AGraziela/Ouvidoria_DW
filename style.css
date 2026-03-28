@@ -1,0 +1,238 @@
+/* Configurações Gerais e Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Fonte moderna e legível */
+    background-color: #c6ffc5; /* Fundo claro para contraste */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 0px;
+    margin: 0;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Container Principal */
+.container {
+    max-width: 1100px;
+    width: 100%;
+}
+
+/* Cabeçalho da Página */
+.header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+/* Estilização da Logo */
+.logo-escola {
+    max-width: 200px; /* Ajuste o tamanho conforme necessário */
+    height: auto;     /* Mantém a proporção da imagem */
+    margin-top: 20px;
+    margin-bottom: 20px; /* Espaço entre a logo e o título */
+    display: block;   /* Garante que ela se comporte como bloco */
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
+}
+
+/* Ajuste opcional no Header para centralizar tudo perfeitamente */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.header h1 {
+    color: #004d40; /* Verde Escuro */
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.header .boas-vindas {
+    color: #292929;
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Container das Opções (Layout em Grade) */
+.opcoes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px; /* Espaço entre os cards */
+}
+
+/* Estilo Geral do Card (Div de Opção) */
+.opcao-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Sombra suave */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Garante que o header respeite o border-radius */
+    transition: transform 0.3s ease;
+}
+
+.opcao-card:hover {
+    transform: translateY(-5px); /* Efeito de flutuar ao passar o mouse */
+}
+
+/* Cabeçalho do Card */
+.card-header {
+    padding: 20px;
+    text-align: center;
+}
+
+.card-header h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+/* Corpo do Card */
+.card-body {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Empurra o botão para o final */
+    flex-grow: 1; /* Garante que todos os corpos tenham a mesma altura */
+}
+
+.card-body p {
+    color: #292929;
+    line-height: 1.6;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    justify-content: center;
+    text-align:center;
+    align-items: center;
+}
+
+/* Estilo Geral dos Botões */
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Cores específicas (Header e Botão) */
+
+/* Verde */
+.color-verde {
+    background-color: #004d40; /* Verde Escuro */
+}
+.color-verde h2 {
+    color: white;
+}
+.btn-verde {
+    background-color: #004d40;
+    color: white;
+}
+.btn-verde:hover {
+    background-color: #00332c;
+}
+
+/* Laranja */
+.color-laranja {
+    background-color: #ff8c00; /* Laranja */
+}
+.color-laranja h2 {
+    color: #004d40; /* Texto escuro para contraste no laranja */
+}
+.btn-laranja {
+    background-color: #ff8c00;
+    color: #004d40;
+}
+.btn-laranja:hover {
+    background-color: #e67e00;
+}
+
+/* Branco (Borda/Status) */
+.color-branco {
+    background-color: #004d40;
+    border-bottom: 2px solid #e0e0e0;
+}
+.color-branco h2 {
+    color: #ffffff;
+}
+.btn-borda {
+    background-color: #004d40;
+    color:  white;
+    border: 2px solid #004d40;
+}
+.btn-borda:hover {
+    background-color: #00332c;
+    color: white;
+}
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 650px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+    .opcoes-container {
+        grid-template-columns: 1fr; /* Uma coluna só */
+    }
+}
+/* Estilização do Rodapé */
+.footer {
+    background-color: #004d40; /* Verde Escuro */
+    color: white;
+    padding: 40px 20px 20px;
+    margin-top: 50px; /* Espaço entre o conteúdo e o rodapé */
+    width: 100%;
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.footer-section h3 {
+    color: #ff8c00; /* Laranja para destaque nos títulos */
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.footer-section p {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+/* Linha final de direitos autorais */
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.8rem;
+    color: #ccc;
+}
+
+/* Pequeno ajuste no body para o rodapé colar no final se a página tiver pouco conteúdo */
+body {
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Faz o conteúdo principal ocupar o espaço disponível */
+}
