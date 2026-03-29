@@ -1,0 +1,120 @@
+/* Configurações baseadas no seu modelo */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #a0f2a6 0%, #ffffff 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cabeçalho */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-escola {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+   
+}
+
+.header h1 {
+    color: #1e631d;
+    font-size: 2.8rem;
+    font-weight: 700;
+}
+
+/* Estilização do Form / Card */
+.opcao-card {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    color: #1e631d;
+    font-weight: 600;
+   
+}
+
+/* Customização do Input Radio em formato de botão */
+
+.custom-radio-group .btn-outline-success{
+    border: none;        /* Remove as bordas internas duplas */
+    border-radius: 0;    /* Reseta o padrão do Bootstrap */
+    padding: 15px;       /* Um pouco mais de altura */
+}
+.btn-check:checked + .btn-outline-success {
+    background-color:  #1e631d; /* Laranja do seu layout */
+    border-color: #ff8c00;
+    color: #ffb13c;
+  
+}
+
+.btn-outline-success {
+    color: #ff8c00;
+    border-color: #1e631d;
+    border-radius: 0; 
+   border-radius: 50px;
+   margin: 0%;
+    padding: 15px;  
+}
+
+/* Botão de Envio */
+.btn-verde {
+    background-color: #1e631d;
+    color: white;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-verde:hover {
+    background-color: #144b13;
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Rodapé */
+.footer {
+    background: linear-gradient(160deg, #1e631d, #05b83bd9);
+    color: #ffffff;
+    padding: 40px 20px 20px;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.footer-section h3 {
+    color: #ff8c00;
+    margin-bottom: 15px;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.8rem;
+}
+body {
+    flex-direction: column;
+}
