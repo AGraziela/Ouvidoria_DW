@@ -220,7 +220,7 @@ body {
 }
 /* Estilização do Rodapé */
 .footer {
-    background: linear-gradient(160deg, #107535, #09d847d9);
+    background: linear-gradient(160deg,  #1e631d, #05b83bd9);
     color: #ffffff;
     padding: 40px 20px 20px;
     margin-top: 50px; /* Espaço entre o conteúdo e o rodapé */
