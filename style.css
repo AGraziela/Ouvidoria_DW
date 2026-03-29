@@ -7,7 +7,8 @@
 
 body {
     font-family: 'Poppins', sans-serif; /* Fonte moderna e legível */
-    background-color: #c6ffc5; /* Fundo claro para contraste */
+      background: linear-gradient(135deg,#a0f2a6 0%, #ffffff 100%);
+  min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,7 +52,7 @@ body {
     align-items: center;
 }
 .header h1 {
-    color: #004d40; /* Verde Escuro */
+    color: #1e631d; /* Verde Escuro */
     font-size: 2.8rem;
     font-weight: 700;
     margin-bottom: 10px;
@@ -74,13 +75,39 @@ body {
 /* Estilo Geral do Card (Div de Opção) */
 .opcao-card {
     background-color: white;
-    border-radius: 10px;
+    border-radius: 10%;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Sombra suave */
     display: flex;
     flex-direction: column;
     overflow: hidden; /* Garante que o header respeite o border-radius */
     transition: transform 0.3s ease;
+    position: relative;
 }
+  .icon  {
+    position: absolute;
+    left: 5px;         /* Distância da borda esquerda */
+    top: 10%;           /* Move para o meio */
+    transform: translateY(-50%); /* Ajuste fino para centralizar real */
+    font-size: 28px;
+   
+    
+    }
+    .color-laranja i {
+        color: #1e631d;
+        margin-right: 20px;
+     margin-left:10px;
+    }
+    .color-verde i {
+        color: #ffffff;
+        margin-right: auto;
+     margin-left:15px;
+    }
+    
+        .color-branco i {
+        color: #ffffff;
+        margin-right: auto;
+     margin-left:20px;
+    }
 
 .opcao-card:hover {
     transform: translateY(-5px); /* Efeito de flutuar ao passar o mouse */
@@ -90,13 +117,17 @@ body {
 .card-header {
     padding: 20px;
     text-align: center;
+    
 }
 
 .card-header h2 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 600;
+    
 }
-
+.ident_h2{
+    margin-left:10px;
+}
 /* Corpo do Card */
 .card-body {
     padding: 30px;
@@ -132,17 +163,17 @@ body {
 
 /* Verde */
 .color-verde {
-    background-color: #004d40; /* Verde Escuro */
+    background-color: #1e631d; /* Verde Escuro */
 }
 .color-verde h2 {
     color: white;
 }
 .btn-verde {
-    background-color: #004d40;
+    background-color: #1e631d;
     color: white;
 }
 .btn-verde:hover {
-    background-color: #00332c;
+    background-color:green;
 }
 
 /* Laranja */
@@ -150,31 +181,31 @@ body {
     background-color: #ff8c00; /* Laranja */
 }
 .color-laranja h2 {
-    color: #004d40; /* Texto escuro para contraste no laranja */
+    color: #1e631d; /* Texto escuro para contraste no laranja */
 }
 .btn-laranja {
     background-color: #ff8c00;
-    color: #004d40;
+    color: #1e631d;
 }
 .btn-laranja:hover {
-    background-color: #e67e00;
+    background-color: #ffa73b;
 }
 
 /* Branco (Borda/Status) */
 .color-branco {
-    background-color: #004d40;
+    background-color: #1e631d;
     border-bottom: 2px solid #e0e0e0;
 }
 .color-branco h2 {
     color: #ffffff;
 }
 .btn-borda {
-    background-color: #004d40;
+    background-color: #1e631d;
     color:  white;
-    border: 2px solid #004d40;
+    border: 2px solid #1e631d;
 }
 .btn-borda:hover {
-    background-color: #00332c;
+    background-color: green;
     color: white;
 }
 
@@ -189,8 +220,8 @@ body {
 }
 /* Estilização do Rodapé */
 .footer {
-    background-color: #004d40; /* Verde Escuro */
-    color: white;
+    background: linear-gradient(160deg, #107535, #09d847d9);
+    color: #ffffff;
     padding: 40px 20px 20px;
     margin-top: 50px; /* Espaço entre o conteúdo e o rodapé */
     width: 100%;
@@ -206,7 +237,7 @@ body {
 }
 
 .footer-section h3 {
-    color: #ff8c00; /* Laranja para destaque nos títulos */
+    color: #ff7300ee; /* Laranja para destaque nos títulos */
     margin-bottom: 15px;
     font-size: 1.2rem;
     font-weight: 600;
@@ -225,7 +256,7 @@ body {
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 0.8rem;
-    color: #ccc;
+    color: #ffffff;
 }
 
 /* Pequeno ajuste no body para o rodapé colar no final se a página tiver pouco conteúdo */
