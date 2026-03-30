@@ -267,3 +267,60 @@ body {
 main {
     flex: 1; /* Faz o conteúdo principal ocupar o espaço disponível */
 }
+/* Animações de Surgimento */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Efeito de brilho sutil que percorre o card */
+@keyframes shine {
+    100% {
+        left: 125%;
+    }
+}
+.header {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.opcao-card {
+    /* ... seu código anterior ... */
+    animation: scaleIn 0.6s ease-out backwards;
+}
+
+/* Delay cascata: cada card aparece um pouco depois do outro */
+.opcao-card:nth-child(1) { animation-delay: 0.2s; }
+.opcao-card:nth-child(2) { animation-delay: 0.4s; }
+.opcao-card:nth-child(3) { animation-delay: 0.6s; }
+.opcao-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%);
+    transform: skewX(-25deg);
+    transition: 0.7s;
+}
+
+.opcao-card:hover::after {
+    animation: shine 0.75s;
+}
