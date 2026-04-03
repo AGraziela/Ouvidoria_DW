@@ -35,7 +35,7 @@ body {
     font-weight: 700;
 }
 
-/* Estilização do Form / Card */
+
 .opcao-card {
     background-color: white;
     border-radius: 20px;
@@ -48,7 +48,7 @@ body {
    
 }
 
-/* Customização do Input Radio em formato de botão */
+
 
 .custom-radio-group .btn-outline-success{
     border: none;        /* Remove as bordas internas duplas */

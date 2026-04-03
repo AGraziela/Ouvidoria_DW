@@ -51,11 +51,26 @@ body {
     flex-direction: column;
     align-items: center;
 }
-.header h1 {
-    color: #1e631d; /* Verde Escuro */
+.titulo {
+    color: transparent; 
+    background:linear-gradient(45deg,rgb(253, 165, 0), rgb(2, 140, 0),#1e631d ,#0daa0a );
+    background-clip:text;
+    color: transparent; 
+    background-size: 200% auto;
     font-size: 2.8rem;
     font-weight: 700;
     margin-bottom: 10px;
+    animation: AnimeGrid 3s linear infinite ;
+}
+@keyframes AnimeGrid{
+0%{
+background-position: 200% 0%;
+}
+
+100%{
+background-position: 0% 50%;
+}
+
 }
 
 .header .boas-vindas {
@@ -93,7 +108,7 @@ body {
     
     }
     .color-laranja i {
-        color: #1e631d;
+        color:#1e631d ;
         margin-right: 20px;
      margin-left:10px;
     }
