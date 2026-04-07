@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg,rgb(255, 193, 101),rgb(255, 205, 129),#ff8c00 ,rgb(178, 255, 107), #a0f2a6,rgb(28, 211, 68),#1e631d,#1e631d ,#0daa0a );
+    background-size: 400% 400%;
+    animation: fundo 12s ease infinite;
+
+}
+@keyframes fundo{
+   0%{ background-position:0% 50%;
+}
+50%{ background-position: 100% 100%;
+}
+100%{ background-position: 0% 50%;
+}
+}
+.logo-escola {
+    display: block;     
+    margin-top: 5px;
+    margin: 0 auto 30px; 
+    max-width: 180px;   
+    height: auto;
+     width: clamp(100px, 25vw, 180px);
+  filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.1));
+  animation: flutuar 3s ease-in-out infinite;
+}
+@keyframes flutuar {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    height : 100%;
+    max-height: 700px;
+    border-radius: 15px;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+    margin-top: 10px;
+}
+/* Card Principal de Login */
+.card_formulario {
+    background: white;
+    padding: 40px;
+    padding: 40px 30px;
+    width: 85%;       
+    margin-bottom:20px;
+    margin-top: 2px;
+    border-radius: 30px; /* Seguindo o estilo arredondado dos seus cards */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    position: relative;
+    overflow: hidden; /* Necessário para o efeito de brilho */
+    animation: scaleIn 0.6s ease-out;
+}
+
+/* Título com o degradê animado que você criou */
+.titulo_form {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: linear-gradient(45deg, #ff8c00, #1e631d, #0daa0a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: AnimeGrid 3s linear infinite;
+}
+
+.subtitulo {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+/* Grupos de Input */
+.input_grupo {
+    display: flex;
+    align-items: center;
+    background: #f4f7f4;
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    border-radius: 15px;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.input_grupo:focus-within {
+    border-color: #1e631d;
+    background: #fff;
+}
+
+.input_grupo i {
+    color: #1e631d;
+    margin-right: 12px;
+}
+
+.input_grupo input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+}
+
+
+.botao {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    background: #1e631d;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.4s;
+    margin-top: 10px;
+}
+
+.botao:hover {
+    background: #0daa0a;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(30, 99, 29, 0.3);
+}
+
+/* Efeito de Brilho (Shine) igual aos cards de opções */
+.card_formulario::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%);
+    transform: skewX(-25deg);
+    transition: 0.7s;
+}
+
+.card_formulario:hover::after {
+    animation: shine 0.8s;
+}
+
+/* Keyframes Reutilizados do seu código */
+@keyframes AnimeGrid {
+    0% { background-position: 200% 0%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shine {
+    100% { left: 125%; }
+}
+/* Mensagem de Erro */
+.mensagem_erro {
+    background-color: #ffe5e5;
+    color: #cc0000;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #ffcccc;
+    animation: fadeInUp 0.4s ease;
+}
+
+.mensagem_erro span {
+    font-size: 1.2rem;
+}
+
+/* Links do Formulário */
+.form_links {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.link_secundario {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.link_secundario:hover {
+    color: #1e631d;
+    text-decoration: underline;
+}
+
+.divisor {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+.form_links p {
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.link_destaque {
+    color: #ff8c00; /* Laranja do seu projeto */
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.link_destaque:hover {
+    color: #1e631d; /* Muda para verde no hover */
+}
+
+/* Ajuste na animação fadeInUp caso não tenha */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.link_voltar {
+    
+    color:  #1e631d; 
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    font-size: 125%;
+}
+
+.link_voltar:hover {
+    color: #ff8c00;
+    transform: translateY(-3px);
+}
