@@ -32,12 +32,48 @@ body {
     height: auto;
      width: clamp(100px, 25vw, 180px);
   filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.1));
-  animation: flutuar 3s ease-in-out infinite;
+  animation: flutuar 5s ease-in-out infinite;
 }
 @keyframes flutuar {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
   100% { transform: translateY(0px); }
+}
+/* Estilos da Barra de Alternância */
+.toggle-container {
+    display: flex;
+    background: #f4f7f4;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    padding: 5px;
+    border: 1px solid #eee;
+}
+
+.toggle-btn {
+    flex: 1;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #666;
+    transition: 0.3s;
+    border-radius: 8px;
+}
+
+.toggle-btn.active {
+    background: #1e631d;
+    color: white;
+    box-shadow: 0 4px 10px rgba(30, 99, 29, 0.2);
+}
+
+/* Esconder suavemente a seção de cadastro */
+#cadastro-section {
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    display: none;
 }
 
 .container{
@@ -48,9 +84,9 @@ body {
     width: 100%;
     max-width: 600px;
     height : 100%;
-    max-height: 700px;
+    max-height: 680px;
     border-radius: 15px;
-    box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+  
     margin-top: 10px;
 }
 /* Card Principal de Login */
@@ -61,26 +97,26 @@ body {
     width: 85%;       
     margin-bottom:20px;
     margin-top: 2px;
-    border-radius: 30px; /* Seguindo o estilo arredondado dos seus cards */
+    border-radius: 30px; 
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 80%;
     max-width: 800px;
     position: relative;
-    overflow: hidden; /* Necessário para o efeito de brilho */
+    overflow: hidden; 
     animation: scaleIn 0.6s ease-out;
 }
 
-/* Título com o degradê animado que você criou */
+
 .titulo_form {
     text-align: center;
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 10px;
-    background: linear-gradient(45deg, #ff8c00, #1e631d, #0daa0a);
+    background: linear-gradient(45deg,#ffe058, #ffb458, #ff8c00, #1e631d, #0daa0a, #9cfd4d);
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: AnimeGrid 3s linear infinite;
+    animation: AnimeGrid 12s linear infinite;
 }
 
 .subtitulo {
@@ -159,7 +195,7 @@ body {
     animation: shine 0.8s;
 }
 
-/* Keyframes Reutilizados do seu código */
+
 @keyframes AnimeGrid {
     0% { background-position: 200% 0%; }
     100% { background-position: 0% 50%; }
@@ -222,17 +258,17 @@ body {
 }
 
 .link_destaque {
-    color: #ff8c00; /* Laranja do seu projeto */
+    color: #ff8c00; 
     text-decoration: none;
     font-weight: 600;
     transition: 0.3s;
 }
 
 .link_destaque:hover {
-    color: #1e631d; /* Muda para verde no hover */
+    color: #1e631d; 
 }
 
-/* Ajuste na animação fadeInUp caso não tenha */
+
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -248,5 +284,52 @@ body {
 
 .link_voltar:hover {
     color: #ff8c00;
-    transform: translateY(-3px);
+   
+}
+.footer {
+    background: linear-gradient(160deg,  #1e631d, #05b83bd9);
+    color: #ffffff;
+    padding: 40px 20px 20px;
+    margin-top: 50px; 
+    width: 100%;
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.footer-section h3 {
+    color: #ff7300ee; 
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.footer-section p {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+/* Linha final de direitos autorais */
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.8rem;
+    color: #ffffff;
+}
+
+body {
+    flex-direction: column;
+}
+
+main {
+    flex: 1; 
 }
