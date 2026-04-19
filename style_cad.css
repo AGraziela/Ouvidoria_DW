@@ -67,6 +67,7 @@ body {
     margin-bottom: 5px;
     background: linear-gradient(45deg,#ffe058, #ffb458, #ff8c00, #1e631d, #0daa0a, #9cfd4d);
     background-size: 200% auto;
+    background-clip:text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: AnimeGrid 12s linear infinite;

@@ -14,6 +14,7 @@ body {
     background: linear-gradient(45deg,rgb(255, 193, 101),rgb(255, 205, 129),#ff8c00 ,rgb(178, 255, 107), #a0f2a6,rgb(28, 211, 68),#1e631d,#1e631d ,#0daa0a );
     background-size: 400% 400%;
     animation: fundo 12s ease infinite;
+    
 
 }
 @keyframes fundo{
@@ -24,6 +25,7 @@ body {
 100%{ background-position: 0% 50%;
 }
 }
+
 .logo-escola {
     display: block;     
     margin-top: 5px;
@@ -67,14 +69,24 @@ body {
     box-shadow: 0 4px 10px rgba(30, 99, 29, 0.2);
 }
 
-/* Esconder suavemente a seção de cadastro */
-#cadastro-section {
-    transition: opacity 0.3s ease;
+
+.form-content {
+    display: none;
+}
+
+.form-content.active-form {
+    display: block;
 }
 
 .hidden {
     display: none;
 }
+
+
+ #secao-cadastro{
+            display:none;
+        }
+
 
 .container{
     display: flex;
@@ -84,10 +96,10 @@ body {
     width: 100%;
     max-width: 600px;
     height : 100%;
-    max-height: 680px;
+    max-height: 900px;
     border-radius: 15px;
   
-    margin-top: 10px;
+    margin-top: 1em;
 }
 /* Card Principal de Login */
 .card_formulario {
@@ -100,7 +112,7 @@ body {
     border-radius: 30px; 
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 80%;
-    max-width: 800px;
+    max-width: 900px;
     position: relative;
     overflow: hidden; 
     animation: scaleIn 0.6s ease-out;
@@ -114,9 +126,21 @@ body {
     margin-bottom: 10px;
     background: linear-gradient(45deg,#ffe058, #ffb458, #ff8c00, #1e631d, #0daa0a, #9cfd4d);
     background-size: 200% auto;
+    background-clip:text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: AnimeGrid 12s linear infinite;
+}
+.titulo_form {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+.fade-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .subtitulo {
@@ -178,7 +202,7 @@ body {
     box-shadow: 0 5px 15px rgba(30, 99, 29, 0.3);
 }
 
-/* Efeito de Brilho (Shine) igual aos cards de opções */
+
 .card_formulario::after {
     content: "";
     position: absolute;
@@ -290,7 +314,7 @@ body {
     background: linear-gradient(160deg,  #1e631d, #05b83bd9);
     color: #ffffff;
     padding: 40px 20px 20px;
-    margin-top: 50px; 
+    margin-top:15%; 
     width: 100%;
 }
 

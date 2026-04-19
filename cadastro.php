@@ -16,13 +16,13 @@
 
         <form action="processa_cadastro.php" method="POST">
             <div class="input_grupo">
-                <i class="bi bi-envelope-fill"></i>
-                <input type="email" name="email" placeholder="Seu melhor e-mail" required>
+                <i class="bi bi-person-circle"></i>
+                <input type="text" name="nome" placeholder="Digite seu nome" required>
             </div>
             
             <div class="input_grupo">
                 <i class="bi bi-lock-fill"></i>
-                <input type="password" name="senha" placeholder="Crie uma senha" required>
+                <input type="password" name="matricula" placeholder="Digite sua matrícula" required>
             </div>
 
             <div class="input_grupo">
@@ -31,7 +31,8 @@
                     <option value="" disabled selected>Selecione seu curso</option>
                     <option value="informatica">Informática</option>
                     <option value="enfermagem">Enfermagem</option>
-                    <option value="administracao">Administração</option>
+                    <option value="administracao">Saúde Bucal</option>
+                    <option value="administracao">Energias Renováveis</option>
                     </select>
             </div>
 
@@ -81,5 +82,7 @@
             <p>&copy; 2026 Ouvidoria Escolar - Todos os direitos reservados.</p>
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-migrate-3.6.0.js"></script>
+    
 </body>
 </html>
