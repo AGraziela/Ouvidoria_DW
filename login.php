@@ -26,7 +26,7 @@
           
         <div id="form-user" class="form-content active-form">
            
-            <form action="valida_login.php" method="POST" id="User_form">
+            <form action="action.php" method="POST" id="User_form">
                 <input type="hidden" name="tipo_usuario" value="comum">
                 
                 <div class="input_grupo">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="input_grupo">
                     <i class="bi bi-lock-fill"></i>
-                    <input type="password" name="matricula" placeholder="Matrícula" >
+                    <input type="password" name="senha" placeholder="Senha" >
                 </div>
                 
                 <button type="submit" class="botao">Entrar</button>
@@ -82,7 +82,7 @@
              </div>
 
           </div>
-        <form action="processa_cadastro.php" method="POST" id="Cad_Form">
+        <form action="action.php" method="POST" id="Cad_Form">
             <div class="input_grupo">
                 <i class="bi bi-person-circle"></i>
                 <input type="text" name="nome" placeholder="Digite seu nome" required>
@@ -90,7 +90,11 @@
             
             <div class="input_grupo">
                 <i class="bi bi-lock-fill"></i>
-                <input type="password" name="matricula" placeholder="Digite sua matrícula" required>
+                <input type="number" name="matricula" placeholder="Digite sua matrícula" required>
+            </div>
+            <div class="input_grupo">
+            <i class="bi bi-lock-fill"></i>
+                <input type="password" name="senha" placeholder="Digite sua senha" required>
             </div>
 
             <div class="input_grupo">
