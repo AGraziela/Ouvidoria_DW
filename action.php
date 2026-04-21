@@ -10,19 +10,19 @@ if (isset($_POST['action'])) {
 
     
   if ($_POST['action'] == 'Login_User') {
-    $nome = limpar($_POST['nome']);
+    $email = trim($_POST['email_user']);
     $senha = trim($_POST['senha']); 
 
-    $sql = "SELECT * FROM tbusuarios WHERE nome = ?";
+    $sql = "SELECT * FROM tbusuarios WHERE email = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$nome]);
+    $stmt->execute([$email]);
     $user = $stmt->fetch();
 
     
     if ($user && password_verify($senha, $user['senha'])) {
        
-        $_SESSION['usuario_id'] = $user['idusu']; 
-        $_SESSION['usuario_nome'] = $user['nome'];
+        $_SESSION['usuario_id'] = $user['id_usu']; 
+        $_SESSION['usuario_email'] = $user['email'];
         echo "sucesso";
     } else {
         echo "invalido";
@@ -33,17 +33,18 @@ if (isset($_POST['action'])) {
     
     if ($_POST['action'] == 'Cadastro_btn') {
         $nome = limpar($_POST['nome']);
-        $matricula = limpar($_POST['matricula']);
+        $email = $_POST['email_cad'];
+        $senha = $_POST['senha']; 
         $curso = limpar($_POST['curso']);
         $serie = limpar($_POST['serie']);
-        $senha = $_POST['senha']; 
+        $matricula = limpar($_POST['matricula']); 
 
         $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
         try {
-            $sql = "INSERT INTO tbusuarios (nome, matricula, curso, serie, senha) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO tbusuarios (nome,email,senha,serie,curso,matricula) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $pdo->prepare($sql);
-            if ($stmt->execute([$nome, $matricula, $curso, $serie, $senha_hash])) {
+            if ($stmt->execute([$nome,$email,$senha_hash,$serie,$curso,$matricula])) {
                 echo "sucesso";
             }
         } catch (PDOException $e) {

@@ -8,7 +8,7 @@
     <title>Ouvidoria-Login</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-     <link rel="stylesheet" href="style_login.css">
+     <link rel="stylesheet" href="style_forms.css">
      
     </head>
 <body>
@@ -25,17 +25,19 @@
           <h2 class="titulo_form" >Login Usuário</h2>
           
         <div id="form-user" class="form-content active-form">
+            <div id="mensagem_erro"  class="alert alert-danger d-none" role="alert" ></div>
+          
            
             <form action="action.php" method="POST" id="User_form">
                 <input type="hidden" name="tipo_usuario" value="comum">
                 
                 <div class="input_grupo">
-                    <i class="bi bi-person-circle"></i>
-                    <input type="text"  name="nome" placeholder="Nome" required>
+                    <i class="bi bi-envelope-fill"></i>
+                    <input type="email" name="email_user" placeholder="Email" >
                 </div>
                 <div class="input_grupo">
                     <i class="bi bi-lock-fill"></i>
-                    <input type="password" name="senha" placeholder="Senha" >
+                    <input type="password" name="senha" placeholder="Senha" required >
                 </div>
                 
                 <button type="submit" class="botao">Entrar</button>
@@ -55,7 +57,7 @@
                 
                 <div class="input_grupo">
                     <i class="bi bi-envelope-fill"></i>
-                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="email" name="email_adm" placeholder="Email" required>
                 </div>
                 <div class="input_grupo">
                     <i class="bi bi-lock-fill"></i>
@@ -77,26 +79,26 @@
         <h2 class="titulo_form">Cadastro</h2>
         <p class="subtitulo">Crie sua conta para acessar o sistema</p>
         <div id="mensagem"  class="alert alert-success d-none"role="alert"> 
-            <div  id="result">
             
-             </div>
-
           </div>
         <form action="action.php" method="POST" id="Cad_Form">
-            <div class="input_grupo">
-                <i class="bi bi-person-circle"></i>
-                <input type="text" name="nome" placeholder="Digite seu nome" required>
-            </div>
-            
-            <div class="input_grupo">
-                <i class="bi bi-lock-fill"></i>
-                <input type="number" name="matricula" placeholder="Digite sua matrícula" required>
+             <div class="input_grupo">
+                    <i class="bi bi-envelope-fill"></i>
+                    <input type="email" name="email_cad" placeholder="Digite seu email" required>
             </div>
             <div class="input_grupo">
             <i class="bi bi-lock-fill"></i>
                 <input type="password" name="senha" placeholder="Digite sua senha" required>
             </div>
 
+            <div class="input_grupo">
+                <i class="bi bi-person-circle"></i>
+                <input type="text" name="nome" placeholder="Digite seu nome" required>
+            </div>
+            <div class="input_grupo">
+                <i class="bi bi-pencil-square"></i>
+                <input type="number" name="matricula" placeholder="Digite sua matrícula" required>
+            </div>
             <div class="input_grupo">
                 <i class="bi bi-mortarboard-fill"></i>
                 <select name="curso" required style="border:none; background:transparent; width:100%; outline:none; font-family:'Poppins'; color:#666;">

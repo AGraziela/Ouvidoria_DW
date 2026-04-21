@@ -64,17 +64,16 @@ $(document).ready(function() {
         return this.optional(element) || /^[A-Za-zÀ-ÿ\s]+$/.test(value);
     }, "Digite apenas letras");
 
-    
-
+  
     
     $("#User_form").validate({
         rules: {
-            nome: { required: true, minlength: 3, letras: true },
-            senha: { required: true, minlength: 6,}
+            email_user: { required: true, email: true, minlength: 6},
+            senha: { required: true, minlength: 8}
         },
         messages: {
-            nome: { required: "Digite seu nome", minlength: "Mínimo 3 caracteres" },
-            senha: { required: "Digite sua senha", minlength: "Mínimo 6 caracteres" }
+           email_user:{ required: "Digite seu email", email:"Digite um email válido", minlength: "Mínimo 6 caracteres"},
+            senha: { required: "Digite sua senha", minlength: "Mínimo 8 caracteres" }
         },
         submitHandler: function(form) {
             $.ajax({
@@ -83,9 +82,10 @@ $(document).ready(function() {
                 data: $(form).serialize() + '&action=Login_User',
                 success: function(response) {
                     if (response.trim() === "sucesso") {
-                        window.location = "manisfestacao.php";
+                        window.location = "manifestacao.php";
                     } else {
-                        alert("Dados de aluno incorretos!");
+                        $("#mensagem_erro").removeClass("d-none").html("Usuário não identificado! Tente novamente");
+                    
                     }
                 }
             });
@@ -95,11 +95,11 @@ $(document).ready(function() {
     
     $("#Adm_form").validate({
         rules: {
-            email: { required: true, email: true },
+            email_adm: { required: true, email: true },
             senha: { required: true, minlength: 6 }
         },
         messages: {
-            email: { required: "Digite seu email", email: "E-mail inválido" },
+            email_adm: { required: "Digite seu email", email: "E-mail inválido" },
             senha: { required: "Digite sua senha", minlength: "Mínimo 6 caracteres" }
         },
         submitHandler: function(form) {
@@ -121,17 +121,19 @@ $(document).ready(function() {
   
     $("#Cad_Form").validate({
         rules: {
-            nome: { required: true, minlength: 3, letras: true },
-            matricula: { required: true, minlength: 6 },
-            senha:{required: true, minlength: 6},
+            nome: { required: true, minlength: 8, letras: true },
+            email_cad: { required: true, email: true, minlength: 6},
+            matricula: { required: true, minlength: 6, number:true},
+            senha:{required: true, minlength: 8},
             curso: { required: true },
             serie: { required: true }
             
         },
         messages: {
-            nome: { required: "Digite seu nome", minlength: "Mínimo 3 caracteres", letras:"Digite apenas letras" },
-            matricula: { required: "Digite sua matricula", minlength: "Mínimo 6 caracteres" },
-            senha: { required: "Digite sua senha", minlength: "Mínimo 6 caracteres" },
+            nome: { required: "Digite seu nome", minlength: "Mínimo 8 caracteres" },
+            email_cad:{ required: "Digite seu email", email:"Digite um email válido", minlength: "Mínimo 6 caracteres"},
+            matricula: { required: "Digite sua matricula", minlength: "Mínimo 6 caracteres", number:"Digite apenas números" },
+            senha: { required: "Digite sua senha", minlength: "Mínimo 8 caracteres" },
             curso: { required: "Selecione seu curso" },
             serie: { required: "Selecione sua série" }
         },
@@ -141,7 +143,7 @@ $(document).ready(function() {
                 method: 'POST',
                 data: $(form).serialize() + '&action=Cadastro_btn',
                 success: function(response) {
-                    $("#mensagem").removeClass("d-none").html("Cadastro realizado com sucesso!");
+                    $("#mensagem").removeClass("d-none").html("Cadastro realizado com sucesso! Faça login!");
                     $("#Cad_Form")[0].reset();
                 },
                 error: function() {
