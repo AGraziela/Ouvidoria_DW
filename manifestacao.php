@@ -1,7 +1,6 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario_id'])) {
-    
     session_destroy();
     header("Location: login.php"); 
     exit();
@@ -28,13 +27,22 @@ if (!isset($_SESSION['usuario_id'])) {
             <p class="boas-vindas">Sua voz é fundamental para melhorarmos nossa instituição. Registre sua manifestação abaixo.</p>
         </header>
 
+        <?php if(isset($_GET['erro'])): ?>
+            <div class="alert alert-danger text-center">
+                <i class="fas fa-exclamation-circle"></i>
+                <?= htmlspecialchars($_GET['erro']) ?>
+            </div>
+        <?php endif; ?>
+
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="opcao-card p-4">
-                    <form id="formManifestacao">
+                    <!-- action e method adicionados para enviar ao PHP -->
+                    <form id="formManifestacao" action="processa_manifestacao.php" method="POST">
+
                         <div class="mb-4">
                             <label class="form-label d-block fw-bold mb-3">Tipo de Manifestação:</label>
-                            <div class="btn-group w-100" role="group" aria-label="Tipos de manifestação">
+                            <div class="btn-group w-100" role="group">
                                 <input type="radio" class="btn-check" name="tipo" id="elogio" value="elogio" autocomplete="off" checked>
                                 <label class="btn btn-outline-success" for="elogio"><i class="fas fa-smile"></i> Elogio</label>
 
@@ -49,16 +57,16 @@ if (!isset($_SESSION['usuario_id'])) {
                             </div>
                         </div>
 
-                        
-
                         <div class="mb-3">
                             <label for="assunto" class="form-label">Assunto</label>
-                            <input type="text" class="form-control" id="assunto" placeholder="Resuma o motivo do contato" required>
+                            <!-- name="assunto" adicionado -->
+                            <input type="text" class="form-control" id="assunto" name="assunto" placeholder="Resuma o motivo do contato" required>
                         </div>
 
                         <div class="mb-4">
                             <label for="mensagem" class="form-label">Sua Mensagem</label>
-                            <textarea class="form-control" id="mensagem" rows="5" placeholder="Descreva detalhadamente sua manifestação..." required></textarea>
+                            <!-- name="mensagem" adicionado -->
+                            <textarea class="form-control" id="mensagem" name="mensagem" rows="5" placeholder="Descreva detalhadamente sua manifestação..." required></textarea>
                         </div>
 
                         <div class="d-grid">
@@ -70,26 +78,23 @@ if (!isset($_SESSION['usuario_id'])) {
         </div>
     </main>
 
-  <footer class="footer">
+    <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Contato</h3>
                 <p>📞 (88) 1234-5678</p>
                 <p>📧 contato@escola.com.br</p>
             </div>
-            
             <div class="footer-section">
                 <h3>Localização</h3>
                 <p>Rua da Educação, 123 - Centro</p>
                 <p>Sobral, CE</p>
             </div>
-
             <div class="footer-section">
                 <h3>Horário de Atendimento</h3>
                 <p>Segunda a Sexta: 07h às 18h</p>
             </div>
         </div>
-        
         <div class="footer-bottom">
             <p>&copy; 2026 Ouvidoria Escolar - Todos os direitos reservados.</p>
         </div>
