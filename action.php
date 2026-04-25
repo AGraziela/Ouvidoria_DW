@@ -1,11 +1,6 @@
 <?php
 require 'conexao.php';
 session_start();
-
-function limpar($data) {
-    return htmlspecialchars(stripslashes(trim($data)));
-}
-
 if (isset($_POST['action'])) {
 
     
@@ -18,11 +13,18 @@ if (isset($_POST['action'])) {
     $stmt->execute([$email]);
     $user = $stmt->fetch();
 
+  
+
     
     if ($user && password_verify($senha, $user['senha'])) {
+        
        
         $_SESSION['usuario_id'] = $user['id_usu']; 
         $_SESSION['usuario_email'] = $user['email'];
+    
+    
+
+
         echo "sucesso";
     } else {
         echo "invalido";
@@ -32,12 +34,12 @@ if (isset($_POST['action'])) {
 
     
     if ($_POST['action'] == 'Cadastro_btn') {
-        $nome = limpar($_POST['nome']);
+        $nome = $_POST['nome'];
         $email = $_POST['email_cad'];
         $senha = $_POST['senha']; 
-        $curso = limpar($_POST['curso']);
-        $serie = limpar($_POST['serie']);
-        $matricula = limpar($_POST['matricula']); 
+        $curso =$_POST['curso'];
+        $serie = $_POST['serie'];
+        $matricula = $_POST['matricula']; 
 
         $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 

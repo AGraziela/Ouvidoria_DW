@@ -12,7 +12,7 @@ require_once 'conexao.php';
 // --- VERIFICA SE ESTÁ LOGADO ---
 if (!isset($_SESSION['usuario_id'])) {
     session_destroy();
-    header("Location: login.php");
+    header("Location: forms.php");
     exit();
 }
 

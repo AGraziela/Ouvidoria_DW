@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -103,10 +103,10 @@
                 <i class="bi bi-mortarboard-fill"></i>
                 <select name="curso" required style="border:none; background:transparent; width:100%; outline:none; font-family:'Poppins'; color:#666;">
                     <option value="" disabled selected>Selecione seu curso</option>
-                    <option value="informatica">Informática</option>
-                    <option value="enfermagem">Enfermagem</option>
-                    <option value="administracao">Saúde Bucal</option>
-                    <option value="administracao">Energias Renováveis</option>
+                    <option value="Informática">Informática</option>
+                    <option value="Enfermagem">Enfermagem</option>
+                    <option value="Saúde Bucal">Saúde Bucal</option>
+                    <option value="Energias Renováveis">Energias Renováveis</option>
                     </select>
             </div>
 
