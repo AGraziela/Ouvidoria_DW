@@ -2,80 +2,93 @@
 // ============================================================
 //  OUVIDORIA - EEEP DOM WALFRIDO
 //  Arquivo: processa_manifestacao.php
-//  Campos reais da tbmanifestacoes:
-//  idmanifest | idtipo | idadm | idusuario | assunto | manifest | feedback | contato
+//
+//  Estrutura real da tabela tbmanifestacoes:
+//  idmanifest (AI PK) | idtipo (varchar 20) | idadm (int, null)
+//  | idusuario (int) | assunto (varchar 200) | manifest (text)
+//  | feedback (text, null) | contato (varchar 20, UNIQUE)
 // ============================================================
-
+ 
 session_start();
-require_once 'conexao.php';
-
+require_once 'conexao.php'; // fornece $pdo (PDO)
+ 
 // --- VERIFICA SE ESTÁ LOGADO ---
 if (!isset($_SESSION['usuario_id'])) {
     session_destroy();
     header("Location: forms.php");
     exit();
 }
-
+ 
 // --- SÓ ACEITA POST ---
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: manisfestacao.php');
-    exit;
+    header('Location: manifestacao.php');
+    exit();
 }
-
-// --- COLETA DOS DADOS ---
-$tipo      = filter_input(INPUT_POST, 'tipo',    FILTER_SANITIZE_SPECIAL_CHARS);
-$assunto   = filter_input(INPUT_POST, 'assunto', FILTER_SANITIZE_SPECIAL_CHARS);
+ 
+// --- COLETA E SANITIZA OS DADOS ---
+$tipo      = filter_input(INPUT_POST, 'tipo',    FILTER_SANITIZE_SPECIAL_CHARS) ?? '';
+$assunto   = filter_input(INPUT_POST, 'assunto', FILTER_SANITIZE_SPECIAL_CHARS) ?? '';
 $mensagem  = trim($_POST['mensagem'] ?? '');
-$usuarioId = $_SESSION['usuario_id'];
-
+$usuarioId = (int) $_SESSION['usuario_id'];
+ 
 // --- VALIDAÇÕES ---
+// idtipo é varchar(20) → a string do formulário vai direto para o banco
 $tiposValidos = ['elogio', 'sugestao', 'reclamacao', 'denuncia'];
-
+ 
 if (!in_array($tipo, $tiposValidos)) {
-    header("Location: manisfestacao.php?erro=" . urlencode("Tipo de manifestação inválido."));
-    exit;
+    header("Location: manifestacao.php?erro=" . urlencode("Tipo de manifestação inválido."));
+    exit();
 }
-
+ 
 if (empty($assunto) || strlen($assunto) < 5) {
-    header("Location: manisfestacao.php?erro=" . urlencode("O assunto deve ter pelo menos 5 caracteres."));
-    exit;
+    header("Location: manifestacao.php?erro=" . urlencode("O assunto deve ter pelo menos 5 caracteres."));
+    exit();
 }
-
+ 
 if (empty($mensagem) || strlen($mensagem) < 20) {
-    header("Location: manisfestacao.php?erro=" . urlencode("A mensagem deve ter pelo menos 20 caracteres."));
-    exit;
+    header("Location: manifestacao.php?erro=" . urlencode("A mensagem deve ter pelo menos 20 caracteres."));
+    exit();
 }
-
-// --- GERA PROTOCOLO ÚNICO (salvo no campo 'contato') ---
+ 
+// --- GERA PROTOCOLO ÚNICO (campo 'contato' tem UNIQUE KEY no banco) ---
 // Formato: OUV-2026-000001
-$ano  = date('Y');
-$stmt = $conn->prepare("SELECT COUNT(*) AS total FROM tbmanifestacoes");
-$stmt->execute();
-$total     = $stmt->get_result()->fetch_assoc()['total'];
-$sequencia = str_pad($total + 1, 6, '0', STR_PAD_LEFT);
-$protocolo = "OUV-{$ano}-{$sequencia}";
-$stmt->close();
-
+try {
+    $ano       = date('Y');
+    $stmtCount = $pdo->query("SELECT COUNT(*) FROM tbmanifestacoes");
+    $total     = (int) $stmtCount->fetchColumn();
+    $sequencia = str_pad($total + 1, 6, '0', STR_PAD_LEFT);
+    $protocolo = "OUV-{$ano}-{$sequencia}";
+} catch (PDOException $e) {
+    error_log("Erro ao gerar protocolo: " . $e->getMessage());
+    header("Location: manifestacao.php?erro=" . urlencode("Erro interno. Tente novamente."));
+    exit();
+}
+ 
 // --- INSERE NO BANCO ---
-// idmanifest → AUTO_INCREMENT (banco gera automaticamente)
-// idadm      → NULL (preenchido pelo administrador depois)
-// feedback   → NULL (resposta do admin, preenchida depois)
-// contato    → protocolo gerado para o aluno acompanhar
-$stmt = $conn->prepare(
-    "INSERT INTO tbmanifestacoes (idmanifest, idtipo, idadm, idusuario, assunto, manifest, feedback)
-     VALUES (?, ?, ?, ?, ?)"
-);
-$stmt->bind_param('sisss', $tipo, $usuarioId, $assunto, $mensagem, $protocolo);
-
-if ($stmt->execute()) {
-    $stmt->close();
-    $conn->close();
+// idtipo   = varchar(20) → recebe string direto: 'elogio', 'sugestao', etc.
+// idadm    = NULL (preenchido pelo admin depois)
+// feedback = NULL (resposta do admin, preenchida depois)
+// contato  = protocolo único gerado acima (UNIQUE KEY)
+$sql = "INSERT INTO tbmanifestacoes 
+            (idtipo, idadm, idusuario, assunto, manifest, feedback, contato)
+        VALUES 
+            (:idtipo, NULL, :idusuario, :assunto, :manifest, NULL, :contato)";
+ 
+try {
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':idtipo'    => $tipo,
+        ':idusuario' => $usuarioId,
+        ':assunto'   => $assunto,
+        ':manifest'  => $mensagem,
+        ':contato'   => $protocolo,
+    ]);
+ 
     header("Location: confirmacao.php?protocolo=" . urlencode($protocolo));
-    exit;
-} else {
-    error_log("Erro ao registrar manifestação: " . $stmt->error);
-    $stmt->close();
-    $conn->close();
-    header("Location: manisfestacao.php?erro=" . urlencode("Erro ao enviar. Tente novamente."));
-    exit;
+    exit();
+ 
+} catch (PDOException $e) {
+    error_log("Erro ao registrar manifestação: " . $e->getMessage());
+    header("Location: manifestacao.php?erro=" . urlencode("Erro ao enviar sua manifestação. Tente novamente."));
+    exit();
 }

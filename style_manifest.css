@@ -62,9 +62,9 @@ body {
     align-items: center;
     flex-direction: column;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px;
     height : 100%;
-    max-height: 1100px;
+    max-height: 1200px;
     border-radius: 15px;
   
     margin-top: 1em;
@@ -80,7 +80,7 @@ body {
     border-radius: 30px; 
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 80%;
-    max-width: 1020px;
+    max-width: 1150px;
     position: relative;
     overflow: hidden; 
     animation: scaleIn 0.6s ease-out;
