@@ -4,85 +4,228 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ouvidoria DW</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ══ OVERLAY ══ */
+        .overlay-logout {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.52);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .overlay-logout.ativo { display: flex; }
+
+        /* ══ POPUP BOX ══ */
+        .popup-logout-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 50px 40px 42px;
+            max-width: 400px;
+            width: 92%;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.18);
+            animation: popIn 0.45s cubic-bezier(0.34,1.56,0.64,1) forwards;
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.7) translateY(30px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Ícone circular */
+        .popup-icone {
+            width: 88px;
+            height: 88px;
+            background: linear-gradient(135deg, #1e631d, #0daa0a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 22px;
+            box-shadow: 0 8px 28px rgba(30,99,29,0.38);
+            animation: pulsar 2.2s ease-in-out infinite;
+        }
+        @keyframes pulsar {
+            0%,100% { box-shadow: 0 8px 28px rgba(30,99,29,0.38); }
+            50%      { box-shadow: 0 8px 40px rgba(30,99,29,0.65); }
+        }
+        .popup-icone i { font-size: 2.6rem; color: #fff; }
+
+        .popup-logout-box h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+        .popup-logout-box p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.88rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+        .btn-fechar-popup {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 30px;
+            background: #1e631d;
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-fechar-popup:hover {
+            background: #0daa0a;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(30,99,29,0.3);
+        }
+
+        /* Barra verde de progresso auto-fechamento */
+        .barra-progresso {
+            height: 4px;
+            background: #e0e7e0;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 22px;
+        }
+        .barra-progresso-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #1e631d, #0daa0a);
+            border-radius: 999px;
+            animation: encolher 3.5s linear forwards;
+        }
+        @keyframes encolher {
+            from { width: 100%; }
+            to   { width: 0%; }
+        }
+        .texto-fechar {
+            font-size: 0.75rem;
+            color: #aaa;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 </head>
 <body>
 
-    <main class="container">
-        <header class="header">
-            <img src="logo_escola.png" alt="Logo da Escola" class="logo-escola">
-            <h1 class="titulo">Ouvidoria Dom Walfrido</h1>
-            <p class="boas-vindas">Bem-vindo! Este é o seu canal direto com a escola. Escolha abaixo como deseja proceder.</p>
-        </header>
+<!-- ══ POPUP DE LOGOUT BEM-SUCEDIDO ══ -->
+<div class="overlay-logout" id="overlayLogoutOk">
+    <div class="popup-logout-box">
+        <div class="popup-icone">
+            <i class="bi bi-check-lg"></i>
+        </div>
+        <h2>Logout realizado!</h2>
+        <p>Você saiu da sua conta com sucesso.<br>Obrigado por usar a Ouvidoria Dom Walfrido.</p>
+        <button class="btn-fechar-popup" onclick="fecharPopupLogout()">
+            <i class="bi bi-house-fill"></i> Voltar à tela inicial
+        </button>
+        <div class="barra-progresso">
+            <div class="barra-progresso-fill" id="barraFill"></div>
+        </div>
+        <p class="texto-fechar">Fechando automaticamente em 3 segundos...</p>
+    </div>
+</div>
 
-        <section class="opcoes-container">
-            
-            <div class="opcao-card">
-                <div class="card-header color-verde">
-                    <h2>Manifestação Anônima</h2>
-                    <div class="icon"><i class="bi bi-shield-lock"></i></div>
-                </div>
-                <div class="card-body">
-                    <p>Utilize esta opção se desejar relatar algo sem revelar sua identidade. Garantimos o sigilo absoluto, porém não poderemos enviar atualizações diretamente a você.</p>
-                    <a href="#" class="btn btn-verde">Registrar Anonimamente</a>
+<main class="container">
+    <header class="header">
+        <img src="logo_escola.png" alt="Logo da Escola" class="logo-escola">
+        <h1 class="titulo">Ouvidoria Dom Walfrido</h1>
+        <p class="boas-vindas">Bem-vindo! Este é o seu canal direto com a escola. Escolha abaixo como deseja proceder.</p>
+    </header>
+
+    <section class="opcoes-container">
+
+        <div class="opcao-card">
+            <div class="card-header color-verde">
+                <h2>Manifestação Anônima</h2>
+                <div class="icon"><i class="bi bi-shield-lock"></i></div>
+            </div>
+            <div class="card-body">
+                <p>Utilize esta opção se desejar relatar algo sem revelar sua identidade. Garantimos o sigilo absoluto, porém não poderemos enviar atualizações diretamente a você.</p>
+                <a href="manifestacao_anonima.html" class="btn btn-verde">Registrar Anonimamente</a>
+            </div>
+        </div>
+
+        <div class="opcao-card">
+            <div class="card-header color-laranja">
+                <h2 class="ident_h2">Manifestação Identificada</h2>
+                <div class="icon">
+                    <i class="bi bi-person-check"></i>
                 </div>
             </div>
-
-            <div class="opcao-card">
-                <div class="card-header color-laranja">
-                    <h2 class="ident_h2">Manifestação Identificada</h2>
-                    <div class="icon">
-                    <i class="bi bi-person-check">
-                </i>
-                
-               </div>
-                </i>
-                </div>
-                 
-                <div class="card-body">
-                    <p>Nesta opção, você informa seus dados. Isso nos permite entrar em contato para solicitar mais detalhes ou enviar o retorno sobre a resolução do seu caso.</p>
-                    <a href="forms.php" class="btn btn-laranja">Registrar com Identificação</a>
-                </div>
+            <div class="card-body">
+                <p>Nesta opção, você informa seus dados. Isso nos permite entrar em contato para solicitar mais detalhes ou enviar o retorno sobre a resolução do seu caso.</p>
+                <a href="forms.php" class="btn btn-laranja">Registrar com Identificação</a>
             </div>
+        </div>
 
-            <div class="opcao-card">
-                <div class="card-header color-branco">
-                    <h2>Consultar Status</h2>
-                         <div class="icon"><i class="bi bi-search"></i></div>
-                </div>
-                <div class="card-body">
-                    <p>Se você já fez uma manifestação (identificada ou anônima com protocolo), utilize o código recebido para verificar o andamento e a resposta da ouvidoria.</p>
-                    <a href="#" class="btn btn-borda">Verificar Andamento</a>
-                </div>
+        <div class="opcao-card">
+            <div class="card-header color-branco">
+                <h2>Consultar Status</h2>
+                <div class="icon"><i class="bi bi-search"></i></div>
             </div>
+            <div class="card-body">
+                <p>Se você já fez uma manifestação (identificada ou anônima com protocolo), utilize o código recebido para verificar o andamento e a resposta da ouvidoria.</p>
+                <a href="acompanhar.php" class="btn btn-borda">Verificar Andamento</a>
+            </div>
+        </div>
 
-        </section>
-    </main>
+    </section>
+</main>
+
 <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Contato</h3>
-                <p>📞 (88) 1234-5678</p>
-                <p>📧 contato@escola.com.br</p>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Localização</h3>
-                <p>Rua da Educação, 123 - Centro</p>
-                <p>Sobral, CE</p>
-            </div>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Contato</h3>
+            <p>📞 (88) 1234-5678</p>
+            <p>📧 contato@escola.com.br</p>
+        </div>
+        <div class="footer-section">
+            <h3>Localização</h3>
+            <p>Rua da Educação, 123 - Centro</p>
+            <p>Sobral, CE</p>
+        </div>
+        <div class="footer-section">
+            <h3>Horário de Atendimento</h3>
+            <p>Segunda a Sexta: 07h às 18h</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Ouvidoria Escolar - Todos os direitos reservados.</p>
+    </div>
+</footer>
 
-            <div class="footer-section">
-                <h3>Horário de Atendimento</h3>
-                <p>Segunda a Sexta: 07h às 18h</p>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2026 Ouvidoria Escolar - Todos os direitos reservados.</p>
-        </div>
-    </footer>
+<script>
+    // ── Detecta ?logout=1 na URL e abre o popup ──
+    (function() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('logout') === '1') {
+            document.getElementById('overlayLogoutOk').classList.add('ativo');
+
+            // Remove o ?logout=1 da URL sem recarregar a página
+            const url = window.location.pathname;
+            history.replaceState(null, '', url);
+
+            // Fecha automaticamente após 3.5 s
+            setTimeout(fecharPopupLogout, 3500);
+        }
+    })();
+
+    function fecharPopupLogout() {
+        document.getElementById('overlayLogoutOk').classList.remove('ativo');
+    }
+</script>
 </body>
 </html>

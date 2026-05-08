@@ -1,0 +1,11 @@
+<?php
+// ============================================================
+//  OUVIDORIA - EEEP DOM WALFRIDO
+//  Arquivo: logout_admin.php
+// ============================================================
+session_start();
+session_unset();
+session_destroy();
+
+header("Location: index.html?logout=1");
+exit();

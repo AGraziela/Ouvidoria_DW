@@ -1,8 +1,12 @@
+// ============================================================
+//  OUVIDORIA - EEEP DOM WALFRIDO
+//  Arquivo: forms.js
+// ============================================================
 
 function switchTab(type) {
-    const userBtn = document.querySelectorAll('.toggle-btn')[0];
+    const userBtn  = document.querySelectorAll('.toggle-btn')[0];
     const adminBtn = document.querySelectorAll('.toggle-btn')[1];
-    const formUser = document.getElementById('form-user');
+    const formUser  = document.getElementById('form-user');
     const formAdmin = document.getElementById('form-admin');
 
     if (type === 'admin') {
@@ -30,9 +34,9 @@ function trocarTitulo(novoTexto) {
     }, 150);
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-    
+    // ── Alternância entre telas login / cadastro ──
     function mostrarTela(tela) {
         if (tela === "cadastro") {
             $("#login_form").hide();
@@ -43,13 +47,13 @@ $(document).ready(function() {
         }
     }
 
-    $("#btn-ir-cadastro").click(function(e) {
+    $("#btn-ir-cadastro").click(function (e) {
         e.preventDefault();
         mostrarTela("cadastro");
         history.pushState({ tela: "cadastro" }, "", "#cadastro");
     });
 
-    $("#btn-ir-login").click(function(e) {
+    $("#btn-ir-login").click(function (e) {
         e.preventDefault();
         mostrarTela("login");
         history.pushState({ tela: "login" }, "", "#login");
@@ -59,103 +63,155 @@ $(document).ready(function() {
         mostrarTela("cadastro");
     }
 
-   
-    $.validator.addMethod("letras", function(value, element) {
+    // ── Validação customizada: só letras ──
+    $.validator.addMethod("letras", function (value, element) {
         return this.optional(element) || /^[A-Za-zÀ-ÿ\s]+$/.test(value);
     }, "Digite apenas letras");
 
-  
-    
+    // ════════════════════════════════════════
+    //  FORMULÁRIO LOGIN USUÁRIO
+    // ════════════════════════════════════════
     $("#User_form").validate({
         rules: {
-            email_user: { required: true, email: true, minlength: 6},
-            senha: { required: true, minlength: 8}
+            email_user: { required: true, email: true, minlength: 6 },
+            senha:      { required: true, minlength: 8 }
         },
         messages: {
-           email_user:{ required: "Digite seu email", email:"Digite um email válido", minlength: "Mínimo 6 caracteres"},
-            senha: { required: "Digite sua senha", minlength: "Mínimo 8 caracteres" }
+            email_user: { required: "Digite seu email", email: "Digite um email válido", minlength: "Mínimo 6 caracteres" },
+            senha:      { required: "Digite sua senha", minlength: "Mínimo 8 caracteres" }
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
+            const btn = $(form).find('button[type="submit"]');
+            btn.prop('disabled', true).text('Entrando...');
+
             $.ajax({
-                url: 'action.php',
+                url:    'action.php',
                 method: 'POST',
-                data: $(form).serialize() + '&action=Login_User',
-                success: function(response) {
+                data:   $(form).serialize() + '&action=Login_User',
+                success: function (response) {
+                    btn.prop('disabled', false).text('Entrar');
                     if (response.trim() === "sucesso") {
                         window.location = "manifestacao.php";
                     } else {
-                        $("#mensagem_erro").removeClass("d-none").html("Usuário não identificado! Tente novamente");
-                    
+                        $("#mensagem_erro")
+                            .removeClass("d-none")
+                            .html('<i class="bi bi-exclamation-circle-fill me-2"></i>Email ou senha incorretos. Tente novamente.');
                     }
+                },
+                error: function () {
+                    btn.prop('disabled', false).text('Entrar');
+                    $("#mensagem_erro")
+                        .removeClass("d-none")
+                        .html('<i class="bi bi-wifi-off me-2"></i>Erro de conexão. Tente novamente.');
                 }
             });
         }
     });
 
-    
+    // ════════════════════════════════════════
+    //  FORMULÁRIO LOGIN ADMIN
+    // ════════════════════════════════════════
     $("#Adm_form").validate({
         rules: {
             email_adm: { required: true, email: true },
-            senha: { required: true, minlength: 6 }
+            senha:     { required: true, minlength: 6 }
         },
         messages: {
             email_adm: { required: "Digite seu email", email: "E-mail inválido" },
-            senha: { required: "Digite sua senha", minlength: "Mínimo 6 caracteres" }
+            senha:     { required: "Digite sua senha", minlength: "Mínimo 6 caracteres" }
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
+            const btn = $(form).find('button[type="submit"]');
+            btn.prop('disabled', true).text('Verificando...');
+
             $.ajax({
-                url: 'action.php',
+                url:    'action.php',
                 method: 'POST',
-                data: $(form).serialize() + '&action=Login_Admin',
-                success: function(response) {
+                data:   $(form).serialize() + '&action=Login_Admin',
+                success: function (response) {
+                    btn.prop('disabled', false).text('Acessar Painel');
                     if (response.trim() === "sucesso") {
                         window.location = "painel_admin.php";
                     } else {
-                        alert("Admin não encontrado ou senha incorreta!");
+                        $("#mensagem_erro_adm")
+                            .removeClass("d-none")
+                            .html('<i class="bi bi-exclamation-circle-fill me-2"></i>Email ou senha incorretos.');
                     }
+                },
+                error: function () {
+                    btn.prop('disabled', false).text('Acessar Painel');
+                    $("#mensagem_erro_adm")
+                        .removeClass("d-none")
+                        .html('<i class="bi bi-wifi-off me-2"></i>Erro de conexão. Tente novamente.');
                 }
             });
         }
     });
 
-  
+    // ════════════════════════════════════════
+    //  FORMULÁRIO CADASTRO
+    // ════════════════════════════════════════
     $("#Cad_Form").validate({
         rules: {
-            nome: { required: true, minlength: 8, letras: true },
-            email_cad: { required: true, email: true, minlength: 6},
-            matricula: { required: true, minlength: 6, number:true},
-            senha:{required: true, minlength: 8},
-            curso: { required: true },
-            serie: { required: true }
-            
+            nome:      { required: true, minlength: 8, letras: true },
+            email_cad: { required: true, email: true, minlength: 6 },
+            matricula: { required: true, minlength: 6, number: true },
+            senha:     { required: true, minlength: 8 },
+            curso:     { required: true },
+            serie:     { required: true }
         },
         messages: {
-            nome: { required: "Digite seu nome", minlength: "Mínimo 8 caracteres" },
-            email_cad:{ required: "Digite seu email", email:"Digite um email válido", minlength: "Mínimo 6 caracteres"},
-            matricula: { required: "Digite sua matricula", minlength: "Mínimo 6 caracteres", number:"Digite apenas números" },
-            senha: { required: "Digite sua senha", minlength: "Mínimo 8 caracteres" },
-            curso: { required: "Selecione seu curso" },
-            serie: { required: "Selecione sua série" }
+            nome:      { required: "Digite seu nome", minlength: "Mínimo 8 caracteres" },
+            email_cad: { required: "Digite seu email", email: "Digite um email válido", minlength: "Mínimo 6 caracteres" },
+            matricula: { required: "Digite sua matrícula", minlength: "Mínimo 6 caracteres", number: "Digite apenas números" },
+            senha:     { required: "Digite sua senha", minlength: "Mínimo 8 caracteres" },
+            curso:     { required: "Selecione seu curso" },
+            serie:     { required: "Selecione sua série" }
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
+            const btn = $(form).find('button[type="submit"]');
+            btn.prop('disabled', true).text('Cadastrando...');
+
             $.ajax({
-                url: 'action.php',
+                url:    'action.php',
                 method: 'POST',
-                data: $(form).serialize() + '&action=Cadastro_btn',
-                success: function(response) {
-                    $("#mensagem").removeClass("d-none").html("Cadastro realizado com sucesso! Faça login!");
-                    $("#Cad_Form")[0].reset();
+                data:   $(form).serialize() + '&action=Cadastro_btn',
+                success: function (response) {
+                    btn.prop('disabled', false).text('Finalizar Cadastro');
+                    const r = response.trim();
+
+                    if (r === "sucesso") {
+                        $("#mensagem")
+                            .removeClass("d-none")
+                            .html('<i class="bi bi-check-circle-fill me-2"></i>Cadastro realizado com sucesso! Faça login.');
+                        $("#Cad_Form")[0].reset();
+                    } else if (r === "email_duplicado") {
+                        $("#mensagem")
+                            .removeClass("d-none alert-success")
+                            .addClass("alert-danger")
+                            .html('<i class="bi bi-exclamation-circle-fill me-2"></i>Este email já está cadastrado. Faça login.');
+                    } else {
+                        $("#mensagem")
+                            .removeClass("d-none alert-success")
+                            .addClass("alert-danger")
+                            .html('<i class="bi bi-exclamation-circle-fill me-2"></i>Erro ao cadastrar. Tente novamente.');
+                    }
                 },
-                error: function() {
-                    alert("Erro na requisição de cadastro.");
+                error: function () {
+                    btn.prop('disabled', false).text('Finalizar Cadastro');
+                    $("#mensagem")
+                        .removeClass("d-none alert-success")
+                        .addClass("alert-danger")
+                        .html('<i class="bi bi-wifi-off me-2"></i>Erro de conexão. Tente novamente.');
                 }
             });
         }
     });
+
 });
 
-
-window.onpopstate = function(event) {
+// ── Navegação pelo histórico do browser ──
+window.onpopstate = function (event) {
     if (event.state && event.state.tela === "cadastro") {
         $("#login_form").hide();
         $("#secao-cadastro").show();

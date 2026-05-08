@@ -1,20 +1,13 @@
 <?php
 // ============================================================
 //  OUVIDORIA - EEEP DOM WALFRIDO
-//  Arquivo: processa_manifestacao.php
-//  Retorna JSON para ser consumido via AJAX pelo manifestacao.php
+//  Arquivo: processa_anonima.php
+//  Manifestação anônima: idusuario = NULL, sem sessão exigida
 // ============================================================
  
-session_start();
 require_once 'conexao.php';
  
 header('Content-Type: application/json');
- 
-// --- VERIFICA LOGIN ---
-if (!isset($_SESSION['usuario_id'])) {
-    echo json_encode(['status' => 'erro', 'mensagem' => 'Sessão expirada. Faça login novamente.']);
-    exit();
-}
  
 // --- SÓ ACEITA POST ---
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -23,10 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
  
 // --- COLETA E SANITIZA ---
-$tipo      = filter_input(INPUT_POST, 'tipo',    FILTER_SANITIZE_SPECIAL_CHARS) ?? '';
-$assunto   = filter_input(INPUT_POST, 'assunto', FILTER_SANITIZE_SPECIAL_CHARS) ?? '';
-$mensagem  = trim($_POST['mensagem'] ?? '');
-$usuarioId = (int) $_SESSION['usuario_id'];
+$tipo     = filter_input(INPUT_POST, 'tipo',    FILTER_SANITIZE_SPECIAL_CHARS) ?? '';
+$assunto  = filter_input(INPUT_POST, 'assunto', FILTER_SANITIZE_SPECIAL_CHARS) ?? '';
+$mensagem = trim($_POST['mensagem'] ?? '');
  
 // --- VALIDAÇÕES ---
 $tiposValidos = ['elogio', 'sugestao', 'reclamacao', 'denuncia'];
@@ -45,7 +37,7 @@ if (empty($mensagem) || strlen($mensagem) < 20) {
 }
  
 // --- GERA PROTOCOLO ÚNICO ---
-// Formato: OUV-2026-000001
+// Formato: OUV-2026-000001 (mesma sequência das identificadas)
 try {
     $ano       = date('Y');
     $stmtCount = $pdo->query("SELECT COUNT(*) FROM tbmanifestacoes");
@@ -59,20 +51,22 @@ try {
 }
  
 // --- INSERE NO BANCO ---
-// idtipo é varchar(20) → recebe string: 'elogio', 'sugestao', etc.
-$sql = "INSERT INTO tbmanifestacoes 
+// idusuario = NULL  → manifestação anônima (coluna agora aceita NULL)
+// idadm     = NULL  → preenchido pelo admin depois
+// feedback  = NULL  → resposta do admin, preenchida depois
+// contato   = protocolo único (UNIQUE KEY)
+$sql = "INSERT INTO tbmanifestacoes
             (idtipo, idadm, idusuario, assunto, manifest, feedback, contato)
-        VALUES 
-            (:idtipo, NULL, :idusuario, :assunto, :manifest, NULL, :contato)";
+        VALUES
+            (:idtipo, NULL, NULL, :assunto, :manifest, NULL, :contato)";
  
 try {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
-        ':idtipo'    => $tipo,
-        ':idusuario' => $usuarioId,
-        ':assunto'   => $assunto,
-        ':manifest'  => $mensagem,
-        ':contato'   => $protocolo,
+        ':idtipo'   => $tipo,
+        ':assunto'  => $assunto,
+        ':manifest' => $mensagem,
+        ':contato'  => $protocolo,
     ]);
  
     echo json_encode([
@@ -82,7 +76,7 @@ try {
     exit();
  
 } catch (PDOException $e) {
-    error_log("Erro ao registrar manifestação: " . $e->getMessage());
+    error_log("Erro ao registrar manifestação anônima: " . $e->getMessage());
     echo json_encode(['status' => 'erro', 'mensagem' => 'Erro ao enviar. Tente novamente.']);
     exit();
 }
